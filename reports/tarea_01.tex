@@ -12,7 +12,7 @@ every state/.style={thick, fill=gray!10},
 % sets the properties for each ’state’ node
 initial text=$ $ }
 
-\title{Tarea 01}
+\title{Exercises from Introduction to the Theory of Computation. Michael Sipser.}
 \author{Ana Maritza Bello Yañez}
 \date{\today}
 
@@ -40,14 +40,34 @@ the following questions about each of these machines.
 \end{figure}
     
 
-        \begin{itemize}
-\item What is the start state? $q_1$
+\begin{itemize}
 
-\item What is the set of accept states?
+\item What is the start state? \\
+\textbf{R: } $q_0 = q_1 \in Q$
+
+\item What is the set of accept states? \\
+\textbf{R: } $F = \{q_2\}$
+
 \item What sequence of states does the machine go through on input \texttt{aabb}
-\item Does the machine accept the string \texttt{aabb}
-\item Does the machine accept the string $\epsilon$?
-        \end{itemize}
+? \\
+\textbf{R: }
+\begin{enumerate}
+    \item Start state in $q_1$
+    \item Read \texttt{a}, follow transition from $q_1$ to $q_2$
+    \item Read \texttt{a}, follow transition from $q_2$ to $q_3$
+    \item Read \texttt{b}, follow transition from $q_3$ to $q_1$
+    \item Read \texttt{b}, follow transition from $q_1$ to $q_1$
+\end{enumerate}
+
+\item Does the machine accept the string \texttt{aabb}? \\
+\textbf{R: } No, it doesn't. It rejects it because at the end of the input,
+$M_1$ is in state $q_1$ which is not an accept state.
+
+\item Does the machine accept the string $\varepsilon$? \\
+\textbf{R: } ¿La cadena vacia solo es aceptada si el estado de aceptación es
+también el estado de inicio????
+
+\end{itemize}
 
 \begin{figure}[h!]
 \centering
@@ -69,16 +89,72 @@ the following questions about each of these machines.
 \caption{$M_2$}
 \end{figure}
 
-        \begin{itemize}
-\item What is the start state?
-\item What is the set of accept states?
-\item What sequence of states does the machine go through on input \texttt{aabb}
-\item Does the machine accept the string \texttt{aabb}?
-\item Does the machine accept the string $\epsilon$?
-        \end{itemize}
+\begin{itemize}
+
+\item What is the start state? \\
+\textbf{R: } $q_0 = q_1 \in Q$
+
+\item What is the set of accept states? \\
+\textbf{R: } $F = \{q_1, q_4\}$
+
+\item What sequence of states does the machine go through on input
+\texttt{aabb}? \\
+\textbf{R: }
+\begin{enumerate}
+    \item Start state in $q_1$
+    \item Read \texttt{a}, follow transition from $q_1$ to $q_1$
+    \item Read \texttt{a}, follow transition from $q_1$ to $q_1$
+    \item Read \texttt{b}, follow transition from $q_1$ to $q_2$
+    \item Read \texttt{b}, follow transition from $q_2$ to $q_4$
+\end{enumerate}
+
+\item Does the machine accept the string \texttt{aabb}? \\
+\textbf{R: } Yes, it does, because the state at the end of the string is $q_4$
+which is an accept state.
+
+\item Does the machine accept the string $\varepsilon$? \\
+\textbf{R: } Yes, because the start state is also an accept state.
+
+\end{itemize}
 
 \textbf{1.2} Give the formal description of the machines M1 and M2 pictured in
-Exercise 1.
+Exercise 1. \\
+\textbf{R: } $M_1 = ( Q, \sum, \delta, q_0, F)$, where
+\begin{enumerate}
+    \item $Q = \{q_1, q_2, q_3\}$
+    \item $\sum = \{\texttt{a,b}\}$
+    \item $\delta$ is described as
+    \begin{center}
+        \begin{tabular}{c|cc}
+            &   \texttt{a}     &   \texttt{b} \\
+            \hline
+            $q_1$   &   $q_2$   &   $q_1$   \\
+            $q_2$   &   $q_3$   &   $q_3$   \\
+            $q_3$   &   $q_2$   &   $q_1$
+        \end{tabular}
+    \end{center}
+    \item $q_0 = q_1 \in Q$
+    \item $F = \{q_2\}$
+\end{enumerate}
+
+$M_2 = ( Q, \sum, \delta, q_0, F)$, where
+\begin{enumerate}
+    \item $Q = \{q_1, q_2, q_3, q_4\}$
+    \item $\sum = \{\texttt{a,b}\}$
+    \item $\delta$ is described as
+    \begin{center}
+        \begin{tabular}{c|cc}
+            &   \texttt{a}     &   \texttt{b} \\
+            \hline
+            $q_1$   &   $q_1$   &   $q_2$   \\
+            $q_2$   &   $q_3$   &   $q_4$   \\
+            $q_3$   &   $q_2$   &   $q_1$   \\
+            $q_4$   &   $q_3$   &   $q_4$
+        \end{tabular}
+    \end{center}
+    \item $q_0 = q_1 \in Q$
+    \item $F = \{q_1, q_4\}$
+\end{enumerate}
 
 
 \textbf{1.3} The formal description of a DFA $M$ is
@@ -147,7 +223,7 @@ for some $x$ and $y$\}
 \item \{$w|w$ is any string except \texttt{11} and \texttt{111}\}
 \item \{$w|w$ every odd position of $w$ is a \texttt{1}\}
 \item \{$w|w$ contains at least two \texttt{0}s and at most one \texttt{1}\}
-\item \{$\epsilon$, $0$\}
+\item \{$\varepsilon$, $0$\}
 \item \{$w|w$ contains an even number of \texttt{O}s, or contains exactly two
 \texttt{1}s\}
 \item The empty set
