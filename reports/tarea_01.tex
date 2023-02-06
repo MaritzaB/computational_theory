@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+%\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
 \usepackage{enumitem}
 \usepackage{tikz}
 \usetikzlibrary{automata, positioning, arrows}
@@ -117,9 +117,14 @@ which is an accept state.
 
 \end{itemize}
 
+\pagebreak
 \textbf{1.2} Give the formal description of the machines M1 and M2 pictured in
 Exercise 1. \\
-\textbf{R: } $M_1 = ( Q, \sum, \delta, q_0, F)$, where
+\textbf{R: } 
+\begin{center}
+    $M_1 = ( Q, \sum, \delta, q_0, F)$, where 
+\end{center}
+
 \begin{enumerate}
     \item $Q = \{q_1, q_2, q_3\}$
     \item $\sum = \{\texttt{a,b}\}$
@@ -137,7 +142,10 @@ Exercise 1. \\
     \item $F = \{q_2\}$
 \end{enumerate}
 
-$M_2 = ( Q, \sum, \delta, q_0, F)$, where
+\begin{center}
+    $M_2 = ( Q, \sum, \delta, q_0, F)$, where 
+\end{center}
+
 \begin{enumerate}
     \item $Q = \{q_1, q_2, q_3, q_4\}$
     \item $\sum = \{\texttt{a,b}\}$
@@ -156,7 +164,7 @@ $M_2 = ( Q, \sum, \delta, q_0, F)$, where
     \item $F = \{q_1, q_4\}$
 \end{enumerate}
 
-
+\pagebreak
 \textbf{1.3} The formal description of a DFA $M$ is
 ($\{q_1,q_2,q_3,q_4,q_5\}$,$\{\texttt{u},\texttt{d}\}$,$\delta$,$q_3$,$\{q_3\}$),
 where $\delta$ is given by the following table. Give the state diagram of this
@@ -174,6 +182,33 @@ machine.
 \end{tabular}
 \end{center}
 
+\textbf{R: }
+\begin{figure}[h!]
+    \centering
+        \begin{tikzpicture}
+            \node [state, initial, accepting] (q1){$q_1$}; 
+            \node [state, right of = q1] (q2){$q_2$};
+            \node [state, right of = q2] (q3){$q_3$};
+            \node [state, right of = q3] (q4){$q_4$};
+            \node [state, right of = q4] (q5){$q_5$};
+                
+            \draw (q1) edge[loop above] node{\texttt{u}} (q1);
+            \draw (q1) edge[bend left, above] node{\texttt{d}} (q2);
+
+            \draw (q2) edge[bend left, below] node{\texttt{u}} (q1);
+            \draw (q2) edge[bend left, above] node{\texttt{d}} (q3);
+
+            \draw (q3) edge[bend left, below] node{\texttt{u}} (q2);
+            \draw (q3) edge[bend left, above] node{\texttt{d}} (q4);
+
+            \draw (q4) edge[bend left, below] node{\texttt{u}} (q3);
+            \draw (q4) edge[bend left, above] node{\texttt{d}} (q5);
+
+            \draw (q5) edge[bend left, below] node{\texttt{u}} (q4);
+            \draw (q5) edge[loop above] node{\texttt{d}} (q5);
+        \end{tikzpicture}
+    \caption{State diagram of $M$}
+    \end{figure}
 
 \textbf{1.4} Each of the following languages is the intersection of two simpler
 languages. In each part, construct DFAs for the simpler languages, then combine
