@@ -2,6 +2,13 @@
 \usepackage[utf8]{inputenc}
 \usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
 \usepackage{enumitem}
+\usepackage{graphicx}
+\graphicspath{ {reports/figures/} }
+\usepackage{textcomp}
+\usepackage{color}
+\usepackage{upquote,listings}
+
+\input{custom/sql_stylo}
 
 \title{Normalización de base de datos del Directorio Estadístico de Unidades Económicas (DENUE).}
 \author{
@@ -15,7 +22,7 @@
 
 
 \begin{abstract}
-    \subsection{Objetivos}
+    \subsection*{Objetivos}
     \begin{enumerate}
         \item Crear catálogos a partir de atributos que no tengan dependencia a
         otros atributos.
@@ -29,7 +36,7 @@
 
 \section{Introducción}
 
-\subsection{Normalización de bases de datos}
+\subsection*{Normalización de bases de datos}
 
 La normalización de una base de datos consiste en re-diseñarla en estructuras
 más pequeñas. Esto se hace mediante la transformación de las vistas de usuario
@@ -59,7 +66,7 @@ Los datos de la llave primaria generalmente son del tipo \textit{integer} ya que
 los datos de este tipo ocupan un espacio de almacenamiento de 4 bytes, mientras
 que un dato tipo \textit{string} de 15 caractéres usará hasta 19 bytes.
 
-\subsection{Datos del DENUE}
+\subsection*{Datos del DENUE}
 
 Para realizar esta práctica utilizamos los datos del DENUE 2022. Estos datos
 contienen la información de 5,528,698 negocios en el país e incorpora las
@@ -108,11 +115,116 @@ siguientes:
 \end{enumerate}
 
 \section{Desarrollo}
+Como primer paso renombramos las columnas de tal manera que los nombres quedaran
+bien especificados y evitar ambigüedades. Ya que estamos trabajando solo con
+datos de la ciudad de México, también se eliminaron las columnas de
+\texttt{clave\_entidad} y \texttt{entidad}, ya que estas contenían los datos
+\texttt{09} y \texttt{Ciudad de México} respectivamente, repetidos en todos los
+registros.
+
+\lstinputlisting[language=SQL,   
+framesep=10pt,
+framextopmargin=10pt]
+{../src/rename_columns.sql}
+
+\subsection{Creación de catálogos}
+Para reducir el espacio ocupado en disco de la base de datos del DENUE, creamos
+6 catálogos de datos. Se escogieron atributos que fueran independientes de
+otros, los catálogos creados fueron los siguientes:
+
+\begin{enumerate}
+    \item Catálogo de municipios.
+    Los municipios o alcaldías de la Ciudad de México son 16 y ya que son un
+    atributo independiente de los datos del DENUE (no cambia), optamos por hacer
+    un catálogo de este.
+    \lstinputlisting[language=SQL,   
+        framesep=10pt,
+        framextopmargin=10pt]
+        {../src/municipios.sql}
+
+    \item Catálogo de actividades económicas.
+    Los tipos de actividades económicas ya están definidas por el DENUE, así que
+    también es conveniente hacer un catálogo de estas.
+    \lstinputlisting[language=SQL,   
+    framesep=10pt,
+    framextopmargin=10pt]
+    {../src/actividades.sql}
+
+    \item Catálogo de vialidades.
+    Los tipos de vialidades que existen son 24. La conveniencia de crear un
+    catálogo de estas es que tenemos 4 campos en los cuales podemos sustituir el
+    valor por la llave foránea de este catálogo.
+    \lstinputlisting[language=SQL,   
+    framesep=10pt,
+    framextopmargin=10pt]
+    {../src/vialidades.sql}
+
+    \item Catálogo de tipos de asentamientos.
+    Los tipos de asentamiento humano ya están definidos, por lo que no cambiarán
+    y es independiente de otro atributo. Los tipos de asentamientos son 43.
+    \lstinputlisting[language=SQL,   
+    framesep=10pt,
+    framextopmargin=10pt]
+    {../src/asentamientos.sql}
+
+    \item Catálogo de centros comerciales.
+    Se refiere al tipo de plaza, centro comercial, etc. donde se encuentra la
+    unidad económica.
+    \lstinputlisting[language=SQL,   
+    framesep=10pt,
+    framextopmargin=10pt]
+    {../src/centros_comerciales.sql}
+
+    \item Catálogo de contactos de establecimientos.
+    Este catálogo se creo con la finalidad de crear una tabla que contenga los
+    datos de contacto del negocio, estos son:
+
+    \begin{itemize}
+        \item Teléfono
+        \item Correo electrónico
+        \item Página web
+    \end{itemize}
+
+    Dado que son atributos cuyo valor puede ser nulo o no, el hecho de ponerlos
+    en una tabla aparte nos permite eliminar de la base de datos principal
+    aquellos registros donde los tres campos están vacíos.
+
+    \lstinputlisting[language=SQL,   
+    framesep=10pt,
+    framextopmargin=10pt]
+    {../src/datos_de_contacto.sql}
+
+\end{enumerate}
+
+
+\subsection{Reemplazo de columnas por llave foránea}
 
 
 \section{Resultados y discusión}
 
+\begin{table}[h!]
+    \centering
+\begin{tabular}{c|c|c}
+    Catálogo sustituido & Tamaño del catálogo & Tamaño de la base de datos\\
+    \hline
+    Base de datos original & No aplica & 236 MB \\
+    Municipios & 24 KB & 222 MB \\
+    Actividades & 152 KB & 195 MB \\
+    Vialidades & 24 KB & \\
+    Asentamientos & 24 KB & \\
+    Centros comerciales & 24 KB & \\
+    Datos de contacto & 24 MB &
+\end{tabular}
+\end{table}
+
 \section{Conclusiones}
 
+\section*{Apéndice}
+
+
+%\begin{figure}[t]
+%    \includegraphics[width=13cm]{figures/bd_original.png}
+%    \centering
+%\end{figure}
 
 \end{document}
