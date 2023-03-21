@@ -16,23 +16,32 @@
 
 \begin{abstract}
     \subsection{Objetivos}
+    \begin{enumerate}
+        \item Crear catálogos a partir de atributos que no tengan dependencia a
+        otros atributos.
+        \item Sustituir las llaves primarias de los catálogos creados en la base
+        de datos original, de tal manera que las tablas estén relacionadas por
+        llave primaria y foránea.
+        \item Verificar que el espacio ocupado en disco por la base de datos
+        disminuyó con la creación de catálogos.
+    \end{enumerate}
 \end{abstract}
 
 \section{Introducción}
 
 \subsection{Normalización de bases de datos}
 
-La normalización de una base de datos consiste en re-diseñarla en estructurasmás
-pequeñas. Esto se hace mediante la transformación de las vistas de
-usuario complejas y de la base de datos a un juego de tablas de datos más
-pequeñas y estables (catálogos).
+La normalización de una base de datos consiste en re-diseñarla en estructuras
+más pequeñas. Esto se hace mediante la transformación de las vistas de usuario
+complejas y de la base de datos a un juego de tablas de datos más pequeñas y
+estables (catálogos).
 
 Cuando una base de datos crece, al no tener un buen diseño, se crean varios
-problemas, entre ellos la redundancia de datos, que es cuando repetimos la misma
+problemas; entre ellos la redundancia de datos, que es cuando repetimos la misma
 información en muchos registros. Esta redundancia en los datos se traduce en
 espacio en disco y con esto se crea también un problema de mantenimiento, ya que
-si debemos actualizar un dato, es posible que se tenga que actualizar en más de
-un lugar.
+si queremos actualizar un dato, es posible que tengamos que hacerlo en más de un
+lugar, con lo que crece la posibilidad de cometer errores.
 
 La finalidad de la normalización es mejorar el desempeño de la base de datos, es
 decir, mejorar el diseño y eliminar datos que sean redundantes. Así, cuando
@@ -55,7 +64,48 @@ que un dato tipo \textit{string} de 15 caractéres usará hasta 19 bytes.
 Para realizar esta práctica utilizamos los datos del DENUE 2022. Estos datos
 contienen la información de 5,528,698 negocios en el país e incorpora las
 actualizaciones de establecimientos, en especial, a partir del Estudio sobre la
-Demografía de los Negocios 2021. 
+Demografía de los Negocios 2021.
+
+Los datos que publica el directorio sobre las unidades económicas son los
+siguientes:
+
+\begin{enumerate}
+    \item Identificación
+    \begin{itemize}
+        \item Nombre de la unidad económica
+        \item Denominación o razón social (personas morales)
+        \item Estrato de personal ocupado
+        \item Código y título o nombre de la clase de actividad económica
+        \item Tipo de la unidad económica
+    \end{itemize}
+
+    \item Ubicación
+    \begin{itemize}
+        \item Domicilio postal o geográfico
+        \item Tipo y nombre de vialidad
+        \item Número exterior
+        \item Edificio, piso o nivel
+        \item Número interior
+        \item Tipo y nombre del asentamiento humano
+        \item Corredor industrial, centro comercial o mercado público
+        \item Número de local
+        \item Código Postal
+        \item Área geoestadística Estatal (AGEE)
+        \item Área geoestadística Municipal (AGEM)
+        \item Localidad geoestadística
+        \item Manzana
+        \item Coordenadas de Latitud
+        \item Coordenadas de Longitud
+    \end{itemize}
+
+    \item Contacto
+    \begin{itemize}
+        \item Número de teléfono
+        \item Correo electrónico
+        \item Sitio en internet
+    \end{itemize}
+    \item Fecha de incorporación al DENUE
+\end{enumerate}
 
 \section{Desarrollo}
 
