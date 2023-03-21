@@ -1,5 +1,6 @@
 reports: \
-	reports/tarea_01.pdf
+	reports/normalizacion_bd_denue.pdf
+#	reports/tarea_01.pdf
 
 .PHONY: \
 	all \
@@ -22,6 +23,9 @@ define lint
 endef
 
 reports/tarea_01.pdf: reports/tarea_01.tex
+	$(renderLatex)
+
+reports/normalizacion_bd_denue.pdf: reports/normalizacion_bd_denue.tex
 	$(renderLatex)
 
 clean:

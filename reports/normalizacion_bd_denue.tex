@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{enumitem}
+
+\title{Normalización de base de datos del Directorio Estadístico de Unidades Económicas (DENUE).}
+\author{
+    Ana Maritza Bello Yañez
+}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\begin{abstract}
+    \subsection{Objetivos}
+\end{abstract}
+
+\section{Introducción}
+
+\subsection{Normalización de bases de datos}
+
+La normalización de una base de datos consiste en re-diseñarla en estructurasmás
+pequeñas. Esto se hace mediante la transformación de las vistas de
+usuario complejas y de la base de datos a un juego de tablas de datos más
+pequeñas y estables (catálogos).
+
+Cuando una base de datos crece, al no tener un buen diseño, se crean varios
+problemas, entre ellos la redundancia de datos, que es cuando repetimos la misma
+información en muchos registros. Esta redundancia en los datos se traduce en
+espacio en disco y con esto se crea también un problema de mantenimiento, ya que
+si debemos actualizar un dato, es posible que se tenga que actualizar en más de
+un lugar.
+
+La finalidad de la normalización es mejorar el desempeño de la base de datos, es
+decir, mejorar el diseño y eliminar datos que sean redundantes. Así, cuando
+tengamos que actualizar un dato en una base de datos normalizada, solo lo
+tendremos que cambiar en una tabla y evitaremos errores a la hora de
+actualizarlo.
+
+Cuando normalizamos una base de datos reducimos su espacio en disco ya que se
+crean tablas más pequeñas sin datos repetidos. Las tablas generadas (catálogos)
+estarán relacionadas entre sí a partir de una llave primaria o
+\textit{primary\_key}, que será una columna que llevará la palabra
+\textit{id} de identificador en el nombre. 
+
+Los datos de la llave primaria generalmente son del tipo \textit{integer} ya que
+los datos de este tipo ocupan un espacio de almacenamiento de 4 bytes, mientras
+que un dato tipo \textit{string} de 15 caractéres usará hasta 19 bytes.
+
+\subsection{Datos del DENUE}
+
+Para realizar esta práctica utilizamos los datos del DENUE 2022. Estos datos
+contienen la información de 5,528,698 negocios en el país e incorpora las
+actualizaciones de establecimientos, en especial, a partir del Estudio sobre la
+Demografía de los Negocios 2021. 
+
+\section{Desarrollo}
+
+
+\section{Resultados y discusión}
+
+\section{Conclusiones}
+
+
+\end{document}
