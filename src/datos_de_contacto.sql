@@ -1,4 +1,4 @@
--- 06 DATOS DE CONTACTO DE ESTABLECIMIENTO
+-- 07 DATOS DE CONTACTO DE ESTABLECIMIENTO
 
 create table if not exists datos_de_contacto(
 	id_clee varchar(50) not null primary key,

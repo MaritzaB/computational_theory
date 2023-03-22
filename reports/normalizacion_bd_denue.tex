@@ -7,6 +7,8 @@
 \usepackage{textcomp}
 \usepackage{color}
 \usepackage{upquote,listings}
+%\usepackage{lscape}
+\usepackage{pdflscape}
 
 \input{custom/sql_stylo}
 
@@ -22,6 +24,15 @@
 
 
 \begin{abstract}
+    En esta práctica se crearon 7 catálogos a partir de la base de datos del
+    DENUE. La finalidad de crear estos catálogos es disminuir el espacio ocupado
+    por la base de datos original. Finalmente, se logró disminuir el espacio de
+    236 a 184 MB, con lo que logramos el onjetivo de la práctica.
+    Como trabajo a futuro se recomienda realizar una normalización formal de la
+    base de datos y llevarla en la medida de lo posible a una forma normal que
+    permita una mejor manipulación de los datos y que ayude a disminuir su
+    tamaño aún más.
+
     \subsection*{Objetivos}
     \begin{enumerate}
         \item Crear catálogos a partir de atributos que no tengan dependencia a
@@ -137,6 +148,7 @@ otros, los catálogos creados fueron los siguientes:
     Los municipios o alcaldías de la Ciudad de México son 16 y ya que son un
     atributo independiente de los datos del DENUE (no cambia), optamos por hacer
     un catálogo de este.
+    El código utilizado para generar este catálogo, es el siguiente:
     \lstinputlisting[language=SQL,   
         framesep=10pt,
         framextopmargin=10pt]
@@ -145,6 +157,8 @@ otros, los catálogos creados fueron los siguientes:
     \item Catálogo de actividades económicas.
     Los tipos de actividades económicas ya están definidas por el DENUE, así que
     también es conveniente hacer un catálogo de estas.
+    El código utilizado para generar este catálogo, es el siguiente:
+
     \lstinputlisting[language=SQL,   
     framesep=10pt,
     framextopmargin=10pt]
@@ -154,6 +168,8 @@ otros, los catálogos creados fueron los siguientes:
     Los tipos de vialidades que existen son 24. La conveniencia de crear un
     catálogo de estas es que tenemos 4 campos en los cuales podemos sustituir el
     valor por la llave foránea de este catálogo.
+    El código utilizado para generar este catálogo, es el siguiente:
+
     \lstinputlisting[language=SQL,   
     framesep=10pt,
     framextopmargin=10pt]
@@ -162,6 +178,8 @@ otros, los catálogos creados fueron los siguientes:
     \item Catálogo de tipos de asentamientos.
     Los tipos de asentamiento humano ya están definidos, por lo que no cambiarán
     y es independiente de otro atributo. Los tipos de asentamientos son 43.
+    El código utilizado para generar este catálogo, es el siguiente:
+
     \lstinputlisting[language=SQL,   
     framesep=10pt,
     framextopmargin=10pt]
@@ -170,10 +188,21 @@ otros, los catálogos creados fueron los siguientes:
     \item Catálogo de centros comerciales.
     Se refiere al tipo de plaza, centro comercial, etc. donde se encuentra la
     unidad económica.
+    El código utilizado para generar este catálogo, es el siguiente:
+
     \lstinputlisting[language=SQL,   
     framesep=10pt,
     framextopmargin=10pt]
     {../src/centros_comerciales.sql}
+
+    \item Catálogo de Códigos Postales.
+
+    El código utilizado para generar este catálogo, es el siguiente:
+
+    \lstinputlisting[language=SQL,   
+    framesep=10pt,
+    framextopmargin=10pt]
+    {../src/codigos_postales.sql}
 
     \item Catálogo de contactos de establecimientos.
     Este catálogo se creo con la finalidad de crear una tabla que contenga los
@@ -189,6 +218,8 @@ otros, los catálogos creados fueron los siguientes:
     en una tabla aparte nos permite eliminar de la base de datos principal
     aquellos registros donde los tres campos están vacíos.
 
+    El código utilizado para generar este catálogo, es el siguiente:
+
     \lstinputlisting[language=SQL,   
     framesep=10pt,
     framextopmargin=10pt]
@@ -196,11 +227,39 @@ otros, los catálogos creados fueron los siguientes:
 
 \end{enumerate}
 
-
 \subsection{Reemplazo de columnas por llave foránea}
+
+Una vez creados los catálogos, sustituimos el \texttt{id} o llave primaria de
+los catálogos en la base de datos original. El \texttt{id} de otra tabla llamado
+en la base de datos principal se llama \textit{llave foránea}.
+
+Después de sustituir las columnas originales por la llave foránea, ya tenemos
+una nueva base de datos que está relacionada a las otras tablas a partir de
+estas llaves.
+
+El código a continuación es el utilizado para realizar esta sustitución.
+
+\lstinputlisting[language=SQL,   
+framesep=10pt,
+framextopmargin=10pt]
+{../src/actualiza_bd.sql}
+
+\subsection{Uso del comando \texttt{vacuum full}}
+Finalmente se utilizó el comando \texttt{vacuum full} ya que este reclama el
+espacio ocupado por tuplas muertas. En PostgreSQL las tuplas que se eliminan o
+que quedan obsoletas por un \texttt{update} no se remueven al instante de la
+tabla, sino que quedan presentes hasta que se hace el \texttt{VACUUM}. Aunque
+los gestores de bases de datos (en este caso el utilizado fue \textit{DBeaver})
+realizan este vaciado de manera periódica, se recomienta realizarlo si es
+necesario.
 
 
 \section{Resultados y discusión}
+
+La siguiente tabla muestra el tamaño de cada uno de los catálogos creados a
+partir de la base de datos original. También podemos observar como baja el
+tamaño de la base de datos original conforme actualizamos la llave foránea de
+cada uno de los catálogos.
 
 \begin{table}[h!]
     \centering
@@ -210,21 +269,49 @@ otros, los catálogos creados fueron los siguientes:
     Base de datos original & No aplica & 236 MB \\
     Municipios & 24 KB & 222 MB \\
     Actividades & 152 KB & 195 MB \\
-    Vialidades & 24 KB & \\
-    Asentamientos & 24 KB & \\
-    Centros comerciales & 24 KB & \\
-    Datos de contacto & 24 MB &
+    Vialidades & 24 KB & 192 MB \\
+    Asentamientos & 24 KB & 191 MB \\
+    Centros comerciales & 24 KB & 190 MB \\
+    Códigos Postales & 192 KB & 186 MB\\
+    Datos de contacto & 24 MB & 184 MB
 \end{tabular}
 \end{table}
 
 \section{Conclusiones}
+\begin{itemize}
+    \item Se logro reducir el tamaño de la base de datos de 236 MB a 184 MB con
+    7 catálogos creados.
+    \item Los catálogos más grandes fueron el de Actividades y el de Códigos
+    Postales. Esto tiene que ver con la gran cantidad de datos de tipo
+    \texttt{varchar} sustituidos por la llave foránea que es de tipo
+    \texttt{integer}.
+    \item El uso del comando \texttt{vacuum full} se vió reflejado en el tamaño
+    final de la base de datos, reduciendo su tamaño en 1 MB.
+    \item La re-estructuración de la tabla de datos de contacto no se reflejó de
+    manera significativa al eliminar las columnas con esta información de la
+    base de datos original.
+\end{itemize}
 
 \section*{Apéndice}
+Se muestran evidencias de la base de datos antes y despues de la creación de los
+catálogos.
 
+\pagebreak
+\begin{landscape}
+\begin{figure}[h!]
+    \includegraphics[width=18cm]{figures/bd_original.png}
+    \caption{Base de datos antes de la creación de catálogos. Podemos observar
+    el espacio ocupado de 236 MB}
+    \centering
+\end{figure}
+\end{landscape}
 
-%\begin{figure}[t]
-%    \includegraphics[width=13cm]{figures/bd_original.png}
-%    \centering
-%\end{figure}
+\begin{figure}[t]
+    \includegraphics[width=13cm]{figures/bd_actualizada.png}
+    \caption{Base de datos después de la creación de catálogos. Podemos observar
+    el espacio ocupado por los catálogos, así como el espacio ocupado por la
+    base de datos al final de la actualización.}
+    \centering
+\end{figure}
 
 \end{document}
