@@ -1,5 +1,6 @@
 reports: \
-	reports/normalizacion_bd_denue.pdf
+	reports/cap_07_sipser.pdf
+#	reports/normalizacion_bd_denue.pdf
 #	reports/tarea_01.pdf
 
 .PHONY: \
@@ -26,6 +27,9 @@ reports/tarea_01.pdf: reports/tarea_01.tex
 	$(renderLatex)
 
 reports/normalizacion_bd_denue.pdf: reports/normalizacion_bd_denue.tex
+	$(renderLatex)
+
+reports/cap_07_sipser.pdf: reports/cap_07_sipser.tex
 	$(renderLatex)
 
 clean:
