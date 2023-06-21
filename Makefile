@@ -12,6 +12,7 @@ reports: \
 define renderLatex
     cd $(<D) && pdflatex $(<F)
 	cd $(<D) && pdflatex $(<F)
+	cd $(<D) && pdflatex $(<F)
 endef
 
 define lint
