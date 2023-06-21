@@ -66,18 +66,26 @@ tanto son primos relativos.
 relativos. \\
 
 
-\textbf{7.4} Fill out the table described in the polynomial time algorithm for
-context-free language recognition from Theorem 7.16 for string $w = baba$ and
-\textit{CFG G:}
+%\textbf{7.4} Fill out the table described in the polynomial time algorithm for
+%context-free language recognition from Theorem 7.16 for string $w = baba$ and
+%\textit{CFG G:}
+%
+%\begin{itemize}
+%    \item $S \rightarrow RT$
+%    \item $R \rightarrow TR|a$
+%    \item $T \rightarrow TR|b$
+%\end{itemize}
 
-\begin{itemize}
-    \item $S \rightarrow RT$
-    \item $R \rightarrow TR|a$
-    \item $T \rightarrow TR|b$
-\end{itemize}
-
-
-
+\begin{center}
+\begin{tabular}{ccccc}
+     & 1 & 2 & 3 & 4 \\
+   1 &  &  &  &  \\
+   2 &  &  &  &  \\
+   3 &  &  &  &  \\
+   4 &  &  &  &  \\
+   5 &  &  &  &  
+\end{tabular}
+\end{center}
 
 \textbf{7.5} Is the following formula satisfiable?
 $ (x \lor y) \land (x \lor \neg{y}) \land (\neg{x} \lor y) \land (\neg{x} \lor
@@ -145,8 +153,60 @@ de valores $x,y$ que la haga verdadera.
 
 \textbf{7.6} Show that P is closed under union, concatenation, and complement.
 
+\textbf{P es cerrada bajo la unión:}
 
+Sea $A$ y $B$ dos lenguajes en $P$. Por definición, existen dos máquinas de
+Turing $M_1$ y $M_2$ que deciden $A$ y $B$ respectivamente en tiempo polinomial.
+Construiremos una máquina de Turing $M$ que decida la $A \cup B$ en tiempo
+polinomial.
+
+La máquina $M$ recibe una cadena $w$ como entrada. $M$ simula $M_1$ y $M_2$
+sobre $w$ y acepta si $M_1$ o $M_2$ aceptan. El tiempo de ejecución de $M$ es
+el tiempo de ejecución de $M_1$ más el tiempo de ejecución de $M_2$ más una
+constante. Por lo tanto, $M$ decide $A \cup B$ en tiempo polinomial.
+
+\textbf{P es cerrada bajo la concatenación:}
+
+Sea $A$ y $B$ dos lenguajes en $P$. Por definición, existen dos máquinas de
+Turing $M_1$ y $M_2$ que deciden $A$ y $B$ respectivamente en tiempo polinomial.
+Construiremos una máquina de Turing $M$ que decida la $A \circ B$ en tiempo
+polinomial.
+
+La máquina $M$ recibe una cadena $w$ como entrada. Para cada manera de cortar la
+cadena $w$ en $w1$ y $w2$, $M$ simula $M_1$ y $M_2$ sobre $w_1$ y $w_2$. Acepta
+si y solo si tanto $M_1$ como $M_2$ aceptan. Si la cadena $w$ no es aceptada
+después de todas las posibles maneras de cortarla, $M$ rechaza.
+
+$M$ acepta $A \circ B$ porque $M$ acepta $w$ si y solo si $w$ puede ser cortada
+tal que $M_1$ acepte $w_1$ y $M_2$ acepte $w_2$. Por lo tanto $M$ acepta $A \circ
+B$.
+
+El tiempo de ejecución de $M$ es el tiempo de ejecución de $M_1$ más el tiempo
+de ejecución de $M_2$ y se repite a lo máximo $O(n)$ veces, más una constante.
+Por lo tanto, $M$ decide $A \circ B$ en tiempo polinomial.
+
+\textbf{P es cerrada bajo el complemento:}
+
+Sea $A$ un lenguaje en $P$. Por definición, existe una máquina de Turing $M$ que
+decide $A$ en tiempo polinomial. Construiremos una máquina de Turing $M'$ que
+decida $\overline{A}$ en tiempo polinomial.
+
+La máquina $M'$ recibe una cadena $w$ como entrada. $M'$ simula $M$ sobre $w$ y
+si $M$ acepta, $M'$ rechaza. Si $M$ rechaza, $M'$ acepta. Por lo tanto, $M'$ 
+decide $\overline{A}$ en tiempo polinomial.
 
 \textbf{7.7} Show that NP is closed under union and concatenation.
+
+\textbf{NP es cerrada bajo la unión:}
+
+Sea $A$ y $B$ dos lenguajes en $NP$. Por definición, existen dos máquinas de
+Turing no deterministas $M_1$ y $M_2$ que deciden $A$ y $B$ respectivamente en
+tiempo polinomial. Construiremos una máquina de Turing no determinista $M$ que
+decida la $A \cup B$ en tiempo polinomial.
+
+La máquina $M$ recibe una cadena $w$ como entrada. $M$ no determinísticamente
+elige entre simular $M_1$ o $M_2$ sobre $w$ y acepta si $M_1$ o $M_2$ aceptan.
+Por lo tanto $M$ decide $A \cup B$ en tiempo polinomial. Ya que $M$ decide $A
+\cup B$ en tiempo polinomial, $A \cup B$ está en $NP$.
 
 \end{document}
